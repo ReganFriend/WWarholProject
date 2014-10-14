@@ -1,0 +1,42 @@
+def WWarhol():
+  fname = pickAFile()
+  pic = makePicture(fname)
+  w = getWidth(pic)
+  h = getHeight(pic)
+  newPic = makeEmptyPicture(2*w,2*h)
+  for filterNumber in range(4):
+    copyInto(myFilter(filterNumber,pic),newPic,filterNumber%2*w,h*(filterNumber>=2))
+  show(newPic)
+def myFilter(n,pic):
+  flist = [orig,greyScale,negate,swapColor]
+  return flist[n](pic)
+def orig(pic):
+  return pic
+def greyScale(pic):
+  npic = duplicatePicture(pic)
+  for p in getPixels(npic):
+    r = getRed(p)
+    g = getGreen(p)
+    b = getBlue(p)
+    c = (r+g+b)/3
+    newColor = makeColor(c,c,c)
+    setColor(p,newColor)
+    return npic
+def negate(pic):
+  npic = duplicatePicture(pic)
+  for p in getPixels(npic):
+    r = getRed(p)
+    g = getGreen(p)
+    b = getBlue(p)
+    color = makeColor(255-r,255-g,255-b)
+    setColor(p,color)
+    return npic
+def swapColor(pic):
+  npic = duplicatePicture(pic)
+  for p in getPixels(npic):
+    r = getRed(p)
+    g = getGreen(p)
+    b = getBlue(p)
+    newColor = makeColor(g,b,r)
+    setColor(p,newColor)
+    return npic
